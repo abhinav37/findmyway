@@ -32,7 +32,7 @@ class ConfirmationDialog : DialogFragment() {
             .setMessage(R.string.request_permission)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 parentFragment?.requestPermissions(
-                    arrayOf(Manifest.permission.CAMERA),
+                    arrayOf(Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET),
                     REQUEST_CAMERA_PERMISSION
                 )
             }

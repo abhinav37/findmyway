@@ -50,6 +50,10 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.junction.findmyway.camera.data.CompassAndText
+import com.junction.findmyway.camera.data.GpsAndMagnetic
 import java.io.File
 import java.util.Arrays
 import java.util.Collections
@@ -261,10 +265,42 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_camera2_basic, container, false)
 
+    private lateinit var arrow: ImageView
+    private lateinit var text: TextView
+
+    private var ALIVE: Boolean = true
+
+    private fun getArrowThread() {
+        Thread {
+            while (ALIVE) {
+                val networkManager = NetworkManager()
+                networkManager.getCompassData { gps -> this.updateArrow(gps) }
+                Thread.sleep(1000)
+            }
+        }.start()
+    }
+
+    private fun updateArrow(gps: CompassAndText) {
+        activity?.runOnUiThread {
+            val matrix: Matrix = Matrix();
+            arrow.scaleType = ImageView.ScaleType.MATRIX
+            matrix.setRotate(
+                gps.compass.degree,
+                arrow.drawable.bounds.width() / 2f,
+                arrow.drawable.bounds.height() / 2f
+            )
+            arrow.imageMatrix = matrix
+            text.text = gps.text
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arrow = view.findViewById(R.id.picture)
+        text = view.findViewById(R.id.text)
         view.findViewById<View>(R.id.picture).setOnClickListener(this)
         view.findViewById<View>(R.id.info).setOnClickListener(this)
         textureView = view.findViewById(R.id.texture)
+        getArrowThread()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -275,7 +311,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
     override fun onResume() {
         super.onResume()
         startBackgroundThread()
-
+        ALIVE = true
         // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
         // a camera and start preview from here (otherwise, we wait until the surface is ready in
@@ -288,6 +324,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
     }
 
     override fun onPause() {
+        ALIVE = false
         closeCamera()
         stopBackgroundThread()
         super.onPause()
@@ -297,7 +334,10 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
         if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
             ConfirmationDialog().show(childFragmentManager, FRAGMENT_DIALOG)
         } else {
-            requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+            requestPermissions(
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_CAMERA_PERMISSION
+            )
         }
     }
 
@@ -665,7 +705,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
                 // For devices with orientation of 270, we need to rotate the JPEG 180 degrees.
                 set(
                     CaptureRequest.JPEG_ORIENTATION,
-                    (ORIENTATIONS.get(rotation?:0) + sensorOrientation + 270) % 360
+                    (ORIENTATIONS.get(rotation ?: 0) + sensorOrientation + 270) % 360
                 )
 
                 // Use the same AE and AF modes as the preview.
