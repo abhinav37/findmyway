@@ -1,0 +1,61 @@
+lt application files
+*.apk
+*.ap_
+*.log
+
+# files for the dex VM
+*.dex
+
+# Java class files
+#*.class
+
+# Windows thumbnail db
+.DS_Store
+
+# generated files
+bin/
+gen/
+out/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
+.idea/
+*.iml
+app/app.iml
+# Local IDEA workspace
+.idea/workspace.xml
+
+# Gradle cache
+.gradle
+
+# key files
+keys/mercari.production.key
+keys/productkey.gradle
+
+# fastlane
+fastlane/report.xml
+
+#crashlytics
+app/src/main/res/values/com_crashlytics_export_strings.xml
+app/fabric.properties
+
+# app's private.properties
+app/private.properties
+
+# launch_url_check shell
+launch_urls_check*/
+
+# Android Studio captures folder
+captures/
+
+# deploygate key
+deploygate.properties
+
+# buildType毎に異なるGCM設定をコピーする
+app/google-services.json
+
+app/mapping

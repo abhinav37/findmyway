@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 import android.Manifest
 import android.app.AlertDialog
@@ -31,13 +31,13 @@ class ConfirmationDialog : DialogFragment() {
         AlertDialog.Builder(activity)
             .setMessage(R.string.request_permission)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                parentFragment.requestPermissions(
+                parentFragment?.requestPermissions(
                     arrayOf(Manifest.permission.CAMERA),
                     REQUEST_CAMERA_PERMISSION
                 )
             }
             .setNegativeButton(android.R.string.cancel) { _, _ ->
-                parentFragment.activity?.finish()
+                parentFragment?.activity?.finish()
             }
             .create()
 }

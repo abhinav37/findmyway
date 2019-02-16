@@ -25,4 +25,6 @@ android {
 dependencies {
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+    implementation 'com.amitshekhar.android:jackson-android-networking:1.0.2'
 }

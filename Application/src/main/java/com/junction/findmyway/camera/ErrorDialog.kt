@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -28,8 +28,8 @@ class ErrorDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(activity)
-            .setMessage(arguments.getString(ARG_MESSAGE))
-            .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
+            .setMessage(arguments?.getString(ARG_MESSAGE))
+            .setPositiveButton(android.R.string.ok) { _, _ -> activity?.finish() }
             .create()
 
     companion object {

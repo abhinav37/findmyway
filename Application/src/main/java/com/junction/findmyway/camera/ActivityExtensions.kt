@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 import android.support.v4.app.FragmentActivity
 import android.widget.Toast

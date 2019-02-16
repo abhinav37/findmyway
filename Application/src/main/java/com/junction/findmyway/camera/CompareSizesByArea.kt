@@ -1,4 +1,4 @@
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 import android.util.Size
 import java.lang.Long.signum

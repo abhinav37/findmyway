@@ -14,16 +14,22 @@
  * limitations under the License.
  */
 
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.androidnetworking.AndroidNetworking
+import com.jacksonandroidnetworking.JacksonParserFactory
+
 
 class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+        AndroidNetworking.initialize(applicationContext);
+        AndroidNetworking.setParserFactory(JacksonParserFactory())
+
         savedInstanceState ?: supportFragmentManager.beginTransaction()
             .replace(R.id.container, Camera2BasicFragment.newInstance())
             .commit()

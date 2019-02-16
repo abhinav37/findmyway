@@ -16,7 +16,7 @@
 
 @file:JvmName("Constants")
 
-package com.example.android.camera
+package com.junction.findmyway.camera
 
 @JvmField
 val REQUEST_CAMERA_PERMISSION = 1
